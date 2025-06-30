@@ -30,5 +30,5 @@
 - Profile: development
 
 ## 👨‍💻 Desenvolvedor
-Jackson Tadeu de Moraes - [Sua Turma]  
+Jackson Tadeu de Moraes - turma 01 
 Desenvolvido com JDK 21 e Spring Boot 3.5.3
