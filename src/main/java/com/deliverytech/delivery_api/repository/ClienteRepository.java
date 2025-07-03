@@ -2,6 +2,8 @@ package com.deliverytech.delivery_api.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClienteRepository extends JpaRepository {
+import com.deliverytech.delivery_api.entity.model.Cliente;
+
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 }
