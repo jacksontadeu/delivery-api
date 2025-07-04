@@ -7,6 +7,7 @@ import java.util.List;
 import com.deliverytech.delivery_api.entity.enums.StatusPedido;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,14 +25,20 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="numero_pedido")
+    private String numeroPedido;
+
+    @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
-    private String enderecoEntrega;
-    private BigDecimal subtotal;
-    private BigDecimal taxaEntrega;
+    
+
+    @Column(name = "valor_total")
     private BigDecimal valorTotal;
 
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
+
+    private String observacoes;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")

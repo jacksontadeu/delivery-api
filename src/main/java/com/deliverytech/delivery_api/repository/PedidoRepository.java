@@ -1,56 +1,30 @@
 package com.deliverytech.delivery_api.repository;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.deliverytech.delivery_api.entity.enums.StatusPedido;
-import com.deliverytech.delivery_api.entity.model.Cliente;
+
 import com.deliverytech.delivery_api.entity.model.Pedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
-    // Buscar pedidos por cliente
-    List<Pedido> findByClienteOrderByDataPedidoDesc(Cliente cliente);
-
-    // Buscar pedidos por cliente ID
+      // Buscar pedidos por cliente ID
     List<Pedido> findByClienteIdOrderByDataPedidoDesc(Long clienteId);
 
-    // Buscar por status
-    List<Pedido> findByStatusOrderByDataPedidoDesc(StatusPedido status);
+    // Pedidos por cliente
+    List<Pedido> findByClienteId(Long clienteId);
 
-    // Buscar por número do pedido
-    Pedido findByNumeroPedido(String numeroPedido);
+    // Pedidos por status
+    List<Pedido> findByStatus(StatusPedido status);
 
-    // Buscar pedidos por período
-    List<Pedido> findByDataPedidoBetweenOrderByDataPedidoDesc(LocalDateTime inicio,
-            LocalDateTime fim);
+    // 10 pedidos mais recentes
+    List<Pedido> findTop10ByOrderByDataPedidoDesc();
 
-    // Buscar pedidos do dia
-    @Query("SELECT p FROM Pedido p WHERE DATE(p.dataPedido) = CURRENT_DATE ORDER BY p.dataPedido DESC")
-    List<Pedido> findPedidosDodia();
+    // Pedidos por período
+    List<Pedido> findByDataPedidoBetween(LocalDateTime inicio, LocalDateTime fim);
 
-    // Buscar pedidos por restaurante
-    @Query("SELECT p FROM Pedido p WHERE p.restaurante.id = :restauranteId ORDER BY p.dataPedido DESC")
-    List<Pedido> findByRestauranteId(@Param("restauranteId") Long restauranteId);
-
-    // Relatório - pedidos por status
-    @Query("SELECT p.status, COUNT(p) FROM Pedido p GROUP BY p.status")
-    List<Object[]> countPedidosByStatus();
-
-    // Pedidos pendentes (para dashboard)
-    @Query("SELECT p FROM Pedido p WHERE p.status IN ('PENDENTE', 'CONFIRMADO','PREPARANDO')"
-            + "ORDER BY p.dataPedido ASC")
-    List<Pedido> findPedidosPendentes();
-
-    // Valor total de vendas por período
-    @Query("SELECT SUM(p.valorTotal) FROM Pedido p WHERE p.dataPedido BETWEEN :inicioAND:fim"
-            + "AND p.status NOT IN ('CANCELADO')")
-    BigDecimal calcularVendasPorPeriodo(
-            @Param("inicio") LocalDateTime inicio,
-            @Param("fim") LocalDateTime fim);
 
 }

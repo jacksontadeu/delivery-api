@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import com.deliverytech.delivery_api.entity.model.Produto;
 import com.deliverytech.delivery_api.entity.model.Restaurante;
 
-public interface ProdutoRespository extends JpaRepository<Produto, Long> {
+public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     // Buscar produtos por restaurante
     List<Produto> findByRestauranteAndDisponivelTrue(Restaurante restaurante);
 
