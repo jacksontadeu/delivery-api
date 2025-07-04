@@ -45,4 +45,4 @@ VALUES
 (1, 18.90, 18.90, 2, 4), -- X-Burger
 -- Pedido 3 (Pedro - Sushi Master)
 (1, 45.90, 45.90, 3, 7), -- Combo Sashimi
-(1, 32.90, 32.90, 3, 8); -- Hot
+(1, 32.90, 32.90, 3, 8); -- Hot Rol
