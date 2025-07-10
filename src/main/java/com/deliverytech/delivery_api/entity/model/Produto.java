@@ -21,7 +21,7 @@ public class Produto {
 
     private String descricao;
     private BigDecimal preco;
-    private String categoria;
+
     private Boolean disponivel;
 
     @ManyToOne

@@ -16,9 +16,10 @@ public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int quantidade;
+
+    private Integer quantidade;
+
     private BigDecimal precoUnitario;
-    private BigDecimal subtotal;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id")

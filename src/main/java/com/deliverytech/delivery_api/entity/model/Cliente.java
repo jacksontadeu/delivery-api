@@ -1,13 +1,10 @@
 package com.deliverytech.delivery_api.entity.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import lombok.Data;
 
@@ -17,16 +14,20 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
+
     private String nome;
+
+    @Column(unique = true)
     private String email;
-    private String telefone;
-    private String endereco;
 
     @Column(name = "data_cadastro")
-    private LocalDateTime dataCadastro;
+    private LocalDateTime dataCadastro= LocalDateTime.now();
 
     @Column(nullable = true)
-    private boolean ativo;
+    private Boolean ativo= true;
+
+    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL)
+    private List<Pedido> pedidos;
 
     public void inativar(){
         this.ativo = false;

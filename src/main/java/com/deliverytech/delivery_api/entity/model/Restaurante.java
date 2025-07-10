@@ -19,16 +19,15 @@ public class Restaurante {
     private Long id;
 
     private String nome;
+
     private String categoria;
-    private String endereco;
-    private String telefone;
+
+    private Integer tempoEntrega;
 
     @Column(name = "taxa_entrega")
     private BigDecimal taxaEntrega;
 
-    private String avaliacao;
-
-    private Boolean ativo;
+    private Boolean ativo= true;
 
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos;
