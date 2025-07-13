@@ -4,7 +4,7 @@
 - Spring Boot 3.2.x
 - Spring Web
 - Spring Data JPA
-- H2 Database
+- Postgres
 - Maven
 
 ## ⚡ Recursos Modernos Utilizados
@@ -26,10 +26,10 @@
 
 ## 🔧 Configuração
 - Porta: 8080
-- Banco: H2 em memória
+- Postgres
 - Profile: development
 
 ## 👨‍💻 Desenvolvedor
-- Jackson Tadeu de Moraes - turma 01 
+- Jackson Tadeu de Moraes - Turma 01 
 
 - Desenvolvido com JDK 21 e Spring Boot 3.5.3
