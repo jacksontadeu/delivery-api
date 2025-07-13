@@ -9,7 +9,10 @@ import com.jtmjinfo.delivery_api.entity.model.Produto;
 import com.jtmjinfo.delivery_api.entity.model.Restaurante;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-//    // Buscar produtos por restaurante
+    List<Produto> findByRestauranteId(Long restauranteId);
+    List<Produto> findByDisponivelTrue();
+    List<Produto> findByCategoria(String categoria);
+    //    // Buscar produtos por restaurante
 //    List<Produto> findByRestauranteAndDisponivelTrue(Restaurante restaurante);
 //
 //    // Buscar produtos por restaurante ID
