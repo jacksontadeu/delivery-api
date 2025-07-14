@@ -1,4 +1,4 @@
-package com.jtmjinfo.delivery_api.entity.DTOs;
+package com.jtmjinfo.delivery_api.entity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
