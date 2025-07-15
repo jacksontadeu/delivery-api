@@ -45,11 +45,7 @@ public class ClienteController {
                     cliente.getNome(),
                     cliente.getEmail(),
                     cliente.getAtivo()));
-
-
         }
-
-
     }
 
     @GetMapping("/listar")
