@@ -12,12 +12,12 @@ public class Usuario {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String nome;
+
     @Column(unique = true)
     private String email;
 
     private String senha;
-
-    private String nome;
 
     @Enumerated(EnumType.STRING)
     private Role role;
