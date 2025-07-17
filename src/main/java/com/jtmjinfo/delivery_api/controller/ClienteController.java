@@ -1,8 +1,8 @@
 package com.jtmjinfo.delivery_api.controller;
 
 
-import com.jtmjinfo.delivery_api.entity.dto.Request.ClienteRequest;
-import com.jtmjinfo.delivery_api.entity.dto.Response.ClienteResponse;
+import com.jtmjinfo.delivery_api.entity.dto.Request.ClienteRequestDTO;
+import com.jtmjinfo.delivery_api.entity.dto.Response.ClienteResponseDTO;
 import com.jtmjinfo.delivery_api.entity.model.Cliente;
 import com.jtmjinfo.delivery_api.service.ClienteService;
 import lombok.RequiredArgsConstructor;
@@ -23,25 +23,25 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<ClienteResponse> cadastrarCliente(@RequestBody ClienteRequest request) {
+    public ResponseEntity<ClienteResponseDTO> cadastrarCliente(@RequestBody ClienteRequestDTO request) {
         Cliente cliente = Cliente.builder()
                 .nome(request.getNome())
                 .email(request.getEmail())
                 .ativo(true)
                 .build();
         Cliente clienteSalvo = clienteService.cadastrarCliente(cliente);
-        return ResponseEntity.ok(new ClienteResponse(clienteSalvo.getId(), clienteSalvo.getNome(),
+        return ResponseEntity.ok(new ClienteResponseDTO(clienteSalvo.getId(), clienteSalvo.getNome(),
                 clienteSalvo.getEmail(), clienteSalvo.getAtivo()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteResponse> buscarClientePorId(@PathVariable Long id) {
+    public ResponseEntity<ClienteResponseDTO> buscarClientePorId(@PathVariable Long id) {
         Optional<Cliente> clienteOptional = clienteService.buscarClientePorId(id);
         if (clienteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         } else {
             Cliente cliente = clienteOptional.get();
-            return ResponseEntity.ok(new ClienteResponse(cliente.getId(),
+            return ResponseEntity.ok(new ClienteResponseDTO(cliente.getId(),
                     cliente.getNome(),
                     cliente.getEmail(),
                     cliente.getAtivo()));
@@ -49,15 +49,15 @@ public class ClienteController {
     }
 
     @GetMapping("/listar")
-    public List<ClienteResponse> listarClientes() {
+    public List<ClienteResponseDTO> listarClientes() {
         return clienteService.listarClientes().
-                stream().map(c -> new ClienteResponse(c.getId(),
+                stream().map(c -> new ClienteResponseDTO(c.getId(),
                         c.getNome(), c.getEmail(), c.getAtivo())).collect(Collectors.toList());
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteResponse> alterarCliente(@PathVariable Long id, @RequestBody ClienteRequest request) {
+    public ResponseEntity<ClienteResponseDTO> alterarCliente(@PathVariable Long id, @RequestBody ClienteRequestDTO request) {
         Optional<Cliente> clienteEntidade = clienteService.buscarClientePorId(id);
         if(clienteEntidade.isPresent()) {
             Cliente cliente = Cliente.builder()
@@ -66,7 +66,7 @@ public class ClienteController {
                     .build();
 
             Cliente clienteSalvo = clienteService.alterarCliente(id, cliente);
-            return ResponseEntity.ok(new ClienteResponse(clienteSalvo.getId(),
+            return ResponseEntity.ok(new ClienteResponseDTO(clienteSalvo.getId(),
                     clienteSalvo.getNome(), clienteSalvo.getEmail(), clienteSalvo.getAtivo()));
         }else{
             return ResponseEntity.notFound().build();
