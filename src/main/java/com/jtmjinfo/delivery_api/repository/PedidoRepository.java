@@ -12,8 +12,8 @@ import com.jtmjinfo.delivery_api.entity.model.Pedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> findByClienteId(Long clienteId);
-    List<Pedido> findByRestauranteId(Long restauranteId);
-    List<Pedido> findByStatus(StatusPedido status);
-    List<Pedido> findByDataPedidoBetween(LocalDateTime inicio, LocalDateTime fim);
+//    List<Pedido> findByRestauranteId(Long restauranteId);
+//    List<Pedido> findByStatus(StatusPedido status);
+//    List<Pedido> findByDataPedidoBetween(LocalDateTime inicio, LocalDateTime fim);
 
 }

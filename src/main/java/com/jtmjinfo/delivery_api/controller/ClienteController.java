@@ -5,6 +5,9 @@ import com.jtmjinfo.delivery_api.entity.dto.Request.ClienteRequestDTO;
 import com.jtmjinfo.delivery_api.entity.dto.Response.ClienteResponseDTO;
 import com.jtmjinfo.delivery_api.entity.model.Cliente;
 import com.jtmjinfo.delivery_api.service.ClienteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +20,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/cliente")
 @RequiredArgsConstructor
+@Tag(name = "Cliente", description = "API REST para Cliente")
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
     @PostMapping("/cadastrar")
+    @Operation(summary = "Cadastrar um novo cliente")
     public ResponseEntity<ClienteResponseDTO> cadastrarCliente(@RequestBody ClienteRequestDTO request) {
         Cliente cliente = Cliente.builder()
                 .nome(request.getNome())
@@ -35,6 +40,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar um cliente pelo seu ID")
     public ResponseEntity<ClienteResponseDTO> buscarClientePorId(@PathVariable Long id) {
         Optional<Cliente> clienteOptional = clienteService.buscarClientePorId(id);
         if (clienteOptional.isEmpty()) {
@@ -49,6 +55,7 @@ public class ClienteController {
     }
 
     @GetMapping("/listar")
+    @Operation(summary = "Listar todos os clientes cadastrados")
     public List<ClienteResponseDTO> listarClientes() {
         return clienteService.listarClientes().
                 stream().map(c -> new ClienteResponseDTO(c.getId(),
@@ -57,6 +64,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Alterar um cliente pelo seu ID")
     public ResponseEntity<ClienteResponseDTO> alterarCliente(@PathVariable Long id, @RequestBody ClienteRequestDTO request) {
         Optional<Cliente> clienteEntidade = clienteService.buscarClientePorId(id);
         if(clienteEntidade.isPresent()) {

@@ -16,7 +16,7 @@ public class PedidoService {
     private PedidoRepository pedidoRepository;
 
     public Pedido criarPedido(Pedido pedido) {
-        pedido.setStatus(StatusPedido.CRIADO);
+
         return pedidoRepository.save(pedido);
     }
 
@@ -28,9 +28,9 @@ public class PedidoService {
         return pedidoRepository.findByClienteId(clienteId);
     }
 
-    public List<Pedido> listarPorRestaurante(Long restauranteId) {
-        return pedidoRepository.findByRestauranteId(restauranteId);
-    }
+//    public List<Pedido> listarPorRestaurante(Long restauranteId) {
+//        return pedidoRepository.findByRestauranteId(restauranteId);
+//    }
 
     public Pedido alterarStatusPedido(Long id, StatusPedido status) {
         return pedidoRepository.findById(id).
