@@ -4,6 +4,8 @@
 - Spring Boot 3.2.x
 - Spring Web
 - Spring Data JPA
+- Spring Security
+- Swagger / OpenAPI
 - Postgres
 - Maven
 
@@ -17,12 +19,7 @@
 1. **Pré-requisitos:** JDK 21 instalado
 2. Clone o repositório
 3. Execute: `./mvnw spring-boot:run`
-4. Acesse: http://localhost:8080/health
-
-## 📋 Endpoints
-- GET /health - Status da aplicação (inclui versão Java)
-- GET /info - Informações da aplicação
-- GET /h2-console - Console do banco H2
+4. Acesse:http://localhost:8080/swagger-ui/index.html
 
 ## 🔧 Configuração
 - Porta: 8080
