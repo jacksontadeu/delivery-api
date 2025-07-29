@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -66,7 +67,7 @@ public class PedidoController {
                 .valorTotal(total)
                 .enderecoEntrega(request.enderecoEntrega())
                 .dataPedido(java.time.LocalDateTime.now())
-                //.status(StatusPedido.CRIADO)
+                .status(StatusPedido.CRIADO)
                 .itens(itensPedido)
                 .build();
         Pedido salvo = pedidoService.criarPedido(pedido);
@@ -84,5 +85,38 @@ public class PedidoController {
                 salvo.getDataPedido(),
                 itensResp
         ));
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar um pedido pelo seu ID")
+    public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable Long id) {
+        Optional<Pedido> pedidoEntidade = pedidoService.buscarPedidoPorId(id);
+        if (pedidoEntidade.isEmpty())
+            return ResponseEntity.notFound().build();
+        else {
+            Pedido pedido = pedidoEntidade.get();
+            List<ItemPedidoResponseDTO> itensResp = pedido.getItens().stream()
+                    .map(i -> new ItemPedidoResponseDTO(i.getProduto().getId(), i.getProduto().getNome(), i.getQuantidade(), i.getPrecoUnitario()))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(new PedidoResponseDTO(
+                    pedido.getId(),
+                    pedido.getCliente().getId(),
+                    pedido.getRestaurante().getId(),
+                    pedido.getEnderecoEntrega(),
+                    pedido.getValorTotal(),
+                    pedido.getStatus(),
+                    pedido.getDataPedido(),
+                    itensResp
+            ));
+        }
+
+    }
+
+    @GetMapping("/listarpedidos/{clienteId}")
+    @Operation(summary = "Listar todos os pedidos cadastrados pelo cliente")
+    public List<Pedido> listarPedidoPorCliente(@PathVariable Long clienteId) {
+        List<Pedido> pedidos = pedidoService.listarPedidos(clienteId);
+        return pedidos;
+
     }
 }

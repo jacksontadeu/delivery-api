@@ -4,6 +4,7 @@ import com.jtmjinfo.delivery_api.entity.enums.StatusPedido;
 import com.jtmjinfo.delivery_api.entity.model.Pedido;
 import com.jtmjinfo.delivery_api.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class PedidoService {
     private PedidoRepository pedidoRepository;
 
     public Pedido criarPedido(Pedido pedido) {
-
+        pedido.setStatus(StatusPedido.CRIADO);
         return pedidoRepository.save(pedido);
     }
 
@@ -25,6 +26,7 @@ public class PedidoService {
     }
 
     public List<Pedido> listarPedidos(Long clienteId) {
+
         return pedidoRepository.findByClienteId(clienteId);
     }
 
@@ -47,4 +49,5 @@ public class PedidoService {
                     return pedidoRepository.save(p);
                 }).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
     }
+
 }
