@@ -23,4 +23,9 @@ public class UsuarioService {
         usuario.setDataCriacao(LocalDateTime.now());
         return usuarioRepository.save(usuario);
     }
+    public Usuario obterEmail(String email){
+        return usuarioRepository.findByEmail(email).
+               orElse(null);
+
+    }
 }

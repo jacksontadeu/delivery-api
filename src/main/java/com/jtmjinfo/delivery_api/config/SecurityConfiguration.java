@@ -1,17 +1,16 @@
 package com.jtmjinfo.delivery_api.config;
 
+import com.jtmjinfo.delivery_api.security.CustomUserDetailsService;
+import com.jtmjinfo.delivery_api.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -22,11 +21,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                //.formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
-
                 .authorizeHttpRequests(autorizacao ->{
-                    autorizacao.requestMatchers("/usuario/cadastrar").hasAnyRole("ADMIN","CLIENTE");
+                    autorizacao.requestMatchers("/usuario/**").permitAll();
+                    autorizacao.requestMatchers("/produto/**").permitAll();
+                    autorizacao.requestMatchers("/restaurante/**").permitAll();
+                    autorizacao.requestMatchers("/usuario/**").hasAnyRole("ADMIN","CLIENTE");
                     autorizacao.anyRequest().authenticated();
                 })
                 .build();
@@ -37,12 +37,12 @@ public class SecurityConfiguration {
 
     }
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails user = User.builder()
-                .username("admin")
-                .password(encoder.encode("123456"))
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user);
+    public UserDetailsService userDetailsService(UsuarioService usuarioService) {
+//        UserDetails user = User.builder()
+//                .username("admin")
+//                .password(encoder.encode("123456"))
+//                .roles("ADMIN")
+//                .build();
+        return new CustomUserDetailsService(usuarioService);
     }
 }
