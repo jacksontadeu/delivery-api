@@ -22,9 +22,18 @@ management:
   server:
     port: 9090
   endpoints:
+    enabled-by-default: false
     web:
       exposure:
-        include: '*'
+        include: 'health,metrics'
+      base-path: '/portal-actuator'
+  endpoint:
+    health:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
 
 
 
