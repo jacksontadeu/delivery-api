@@ -7,8 +7,8 @@ import com.jtmjinfo.delivery_api.entity.model.Cliente;
 import com.jtmjinfo.delivery_api.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/cliente")
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Cliente", description = "API REST para Cliente")
 public class ClienteController {
 
@@ -29,6 +30,7 @@ public class ClienteController {
     @PostMapping("/cadastrar")
     @Operation(summary = "Cadastrar um novo cliente")
     public ResponseEntity<ClienteResponseDTO> cadastrarCliente(@RequestBody ClienteRequestDTO request) {
+        log.info("Cliente: {}", request.getNome());
         Cliente cliente = Cliente.builder()
                 .nome(request.getNome())
                 .email(request.getEmail())
@@ -42,6 +44,7 @@ public class ClienteController {
     @GetMapping("/{id}")
     @Operation(summary = "Buscar um cliente pelo seu ID")
     public ResponseEntity<ClienteResponseDTO> buscarClientePorId(@PathVariable Long id) {
+        log.info("Cliente ID: {}", id);
         Optional<Cliente> clienteOptional = clienteService.buscarClientePorId(id);
         if (clienteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -66,7 +69,8 @@ public class ClienteController {
     @PutMapping("/{id}")
     @Operation(summary = "Alterar um cliente pelo seu ID")
     public ResponseEntity<ClienteResponseDTO> alterarCliente(@PathVariable Long id, @RequestBody ClienteRequestDTO request) {
-        Optional<Cliente> clienteEntidade = clienteService.buscarClientePorId(id);
+        log.info("Alteração Cliente ID: {}", id);
+         Optional<Cliente> clienteEntidade = clienteService.buscarClientePorId(id);
         if(clienteEntidade.isPresent()) {
             Cliente cliente = Cliente.builder()
                     .nome(request.getNome())

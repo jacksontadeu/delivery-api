@@ -12,6 +12,7 @@ import com.jtmjinfo.delivery_api.service.RestauranteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/pedido")
 @RequiredArgsConstructor
 @Tag(name = "Pedido", description = "API REST para Pedido")
+@Slf4j
 public class PedidoController {
 
     @Autowired
@@ -39,6 +41,7 @@ public class PedidoController {
     @PostMapping("/criarpedido")
     @Operation(summary = "Cadastrar um novo pedido")
     public ResponseEntity<PedidoResponseDTO> cadastrarPedido(@RequestBody PedidoRequestDTO request) {
+        log.info("Cadastro do pedido ID: {}", request.clienteId());
         Cliente cliente = clienteService.buscarClientePorId(request.clienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
@@ -90,6 +93,7 @@ public class PedidoController {
     @GetMapping("/{id}")
     @Operation(summary = "Buscar um pedido pelo seu ID")
     public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable Long id) {
+       log.info("Consulta do pedido ID: {}", id);
         Optional<Pedido> pedidoEntidade = pedidoService.buscarPedidoPorId(id);
         if (pedidoEntidade.isEmpty())
             return ResponseEntity.notFound().build();

@@ -8,6 +8,7 @@ import com.jtmjinfo.delivery_api.service.ProdutoService;
 import com.jtmjinfo.delivery_api.service.RestauranteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/produto")
 @Tag(name = "Produto", description = "API REST para Produto")
+@Slf4j
 public class ProdutoController {
 
 
@@ -33,6 +35,7 @@ public class ProdutoController {
     @Operation(summary = "Cadastrar um novo produto")
     public ResponseEntity<ProdutoResponseDTO> cadastrarProduto(
             @RequestBody ProdutoRequestDTO request) {
+        log.info("Cadastro do produto: {}", request.nome());
         Restaurante restaurante = restauranteService.
                 buscarRestaurantePorId(request.restauranteId()).orElseThrow(()->
                         new RuntimeException("Produto não encontrado"));
