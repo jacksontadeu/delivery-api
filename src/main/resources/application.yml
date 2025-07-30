@@ -18,6 +18,15 @@ logging:
     name: delivery.log
   level:
     root: info
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
 
 
 
