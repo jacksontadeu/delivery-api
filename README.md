@@ -5,6 +5,9 @@
 - Spring Web
 - Spring Data JPA
 - Spring Security
+- Spring Actuator
+- SLF4J - Logging
+- Prometheus
 - Swagger / OpenAPI
 - Postgres
 - Maven
